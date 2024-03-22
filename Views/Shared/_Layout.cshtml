@@ -25,6 +25,10 @@
                         
                     </ul>
                 </div>
+                <form class="d-flex" asp-action="Index" method="get">  @* metod get -> inputtan girilen değeri aktarır *@
+                    <input type="search" class="form-conrtol me-2" name="searchString" value="@ViewBag.SearchString" placeholder="Anahtar Kelime">
+                    <button type="submit" class="btn btn-primary">Ara</button>
+                </form>
             </div>
         </nav>
     </header>
