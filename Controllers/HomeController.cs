@@ -27,8 +27,15 @@ public class HomeController : Controller
             products = products.Where(p => p.CategoryId == int.Parse(category)).ToList();
         }
 
-        ViewBag.Categories = new SelectList(Repository.Categories,"CategoryId","Name");
-        return View();
+        // ViewBag.Categories = new SelectList(Repository.Categories,"CategoryId","Name");
+
+        var model = new ProductViewModel{
+            Products = products,
+            Categories = Repository.Categories,
+            SelectedCategory = category
+        };
+
+        return View(model);
     }
 
 
