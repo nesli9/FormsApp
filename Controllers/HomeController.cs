@@ -42,7 +42,7 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        ViewBag.Categories = Repository.Categories;
+        ViewBag.Categories = new SelectList(Repository.Categories,"CategoryId","Name");
         return View();
     }
     [HttpPost]
