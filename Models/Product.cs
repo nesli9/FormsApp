@@ -12,7 +12,7 @@ namespace FormsApp.Models{
         [Required] //girilmesi zorunlu alan - boş bırakılınca uyarı yazısı verir.
         [StringLength(100)] //100 karakterli bir isim girlimeli
         [Display(Name= "Urun Adı")]
-        public string? Name { get; set; } = string.Empty;
+        public string Name { get; set; } = null!;
 
         [Required]
         [Range(0,100000)] //0 ile 100.000 arasında bir değer girilmeli
@@ -20,7 +20,6 @@ namespace FormsApp.Models{
         public decimal? Price { get; set; }
 
         [Display(Name= "Resim")]
-        [Required]
         public string? Image { get; set; }= string.Empty;
 
         public bool IsActive { get; set; }
