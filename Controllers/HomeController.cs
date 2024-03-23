@@ -48,8 +48,14 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Create(Product model)
     {
-        Repository.CreateProduct(model);
-        return RedirectToAction("Index");
+        if (ModelState.IsValid) //kullanıcının girdiği değerler doğruysa sayfaya eklenir
+        {
+            model.ProductId = Repository.Products.Count +1; //formdan alınan veri bilgilerine veri saysı +1 . ıd atanır
+            Repository.CreateProduct(model);
+            return RedirectToAction("Index");
+        }
+        ViewBag.Categories = new SelectList(Repository.Categories,"CategoryId","Name");
+        return View(model);
     }
 
 }
