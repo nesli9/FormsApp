@@ -46,10 +46,26 @@ public class HomeController : Controller
         return View();
     }
     [HttpPost]
-    public IActionResult Create(Product model , IFormFile imageFile)
+    public async Task<IActionResult> Create(Product model , IFormFile imageFile)
     {
+        var allowedExtensions = new[] {".jpg",".jpeg",".png"};
+        var extension = Path.GetExtension(imageFile.FileName);// abc.jpg
+        var randomFileName = string.Format($"{Guid.NewGuid().ToString()}{extension}") ; //random jpg dosya ismi oluşturulur.
+        var path = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot/img", randomFileName); //formdan yüklenen resmi img klasörüne atar
+
+        if (imageFile != null){
+            if (!allowedExtensions.Contains(extension)){
+                ModelState.AddModelError("","Geçerli bir resim seçiniz.");
+            }
+        }
+
         if (ModelState.IsValid) //kullanıcının girdiği değerler doğruysa sayfaya eklenir
         {
+            using (var stream = new FileStream(path , FileMode.Create))
+            {
+                await imageFile.CopyToAsync(stream);
+            }
+            model.Image = randomFileName;
             model.ProductId = Repository.Products.Count +1; //formdan alınan veri bilgilerine veri saysı +1 . ıd atanır
             Repository.CreateProduct(model);
             return RedirectToAction("Index");

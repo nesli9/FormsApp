@@ -27,6 +27,7 @@ namespace FormsApp.Models{
         [Display(Name="Category")]
         [Required]
         public int? CategoryId { get; set; }
+        
     }
     
 }
