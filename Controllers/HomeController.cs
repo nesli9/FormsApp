@@ -129,9 +129,26 @@ public class HomeController : Controller
         if (entity == null){
             return NotFound();
         }
+
+        return View("DeleteConfirm",entity);
         
+    }
+
+    [HttpPost]
+    public IActionResult Delete(int id, int ProductId){
+
+        if (id != ProductId){
+            return NotFound();
+        }
+
+        var entity = Repository.Products.FirstOrDefault(p => p.ProductId == ProductId); 
+        if (entity == null){
+            return NotFound();
+        }
+
         Repository.DeleteProduct(entity);
         return RedirectToAction("Index");
+
     }
 
 }
